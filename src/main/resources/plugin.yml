@@ -1,0 +1,11 @@
+name: trainingPlugin
+version: '1.0.0'
+main: me.houserlab.trainingPlugin.TrainingPlugin
+api-version: '1.21'
+
+commands:
+  cow:
+    description: "Makes LETHAL COWS"
+    usage: "/cow [baby/adult] (Default adult)"
+    permission: trainingplugin.command.cow
+    permission-message: "You do not have access to this command broski!"
