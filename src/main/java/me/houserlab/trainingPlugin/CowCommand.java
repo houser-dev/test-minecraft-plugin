@@ -26,23 +26,24 @@ public class CowCommand implements CommandExecutor, TabExecutor {
             return true;
         }
 
-        boolean isBaby;
-
-        Cow cow = player.getWorld().spawn(player.getLocation(), Cow.class);
-
-        if (args.length == 1 && args[0].equalsIgnoreCase("baby")) {
-            sender.sendMessage("Spawning special Baby cow ;)");
-            cow.setBaby();
-
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("adult")) {
-            sender.sendMessage("Spawned big daddy cow ;)");
-
-        } else {
+        if (args.length != 1) {
             TrainingPlugin.getInstance().getLogger().warning("Command issue :(");
             sender.sendMessage("Please specify an adult/baby cow B-)");
             return false;
+        }
+
+        Cow cow = player.getWorld().spawn(player.getLocation(), Cow.class);
+
+
+        if (args[0].equalsIgnoreCase("baby")) {
+            sender.sendMessage("Spawning special Baby cow ;)");
+            cow.setBaby();
+
+        } else if (args[0].equalsIgnoreCase("adult")) {
+            sender.sendMessage("Spawned big daddy cow ;)");
 
         }
+
         // Sets cows persistent data container for COWSPLOSION_KEY to true, marking the cow as of origin of COWSPLOSION command
         cow.getPersistentDataContainer().set(TrainingPlugin.COWSPLOSION_KEY, PersistentDataType.BOOLEAN, true);
 
