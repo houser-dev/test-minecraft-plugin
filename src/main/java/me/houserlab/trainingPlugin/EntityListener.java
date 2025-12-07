@@ -5,6 +5,7 @@ import org.bukkit.entity.Cow;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.persistence.PersistentDataType;
@@ -32,6 +33,18 @@ public class EntityListener implements Listener {
                 cow.getWorld().createExplosion(cow.getLocation(), 1);
             }
         }
+    }
+
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event) {
+
+        Boolean is_cowsplosion = event.getEntity().getPersistentDataContainer().get(TrainingPlugin.COWSPLOSION_KEY, PersistentDataType.BOOLEAN);
+        Entity entity = event.getEntity();
+        if (entity instanceof Cow cow && Boolean.TRUE.equals(is_cowsplosion)) {
+            cow.getWorld().createExplosion(cow.getLocation(), 10);
+
+        }
+
     }
 
 }

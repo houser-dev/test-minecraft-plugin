@@ -9,7 +9,7 @@ prefix: CowSplosion
 commands:
   cow:
     description: "Makes LETHAL COWS (Explosivo) Specify baby to spawn baby cow instead"
-    usage: "/cow [baby/adult]"
+    usage: "/cow [baby/adult] [qty]"
     aliases: [ cowcannon ]
     permission: trainingplugin.command.cow
     permission-message: "You do not have access to this command broski!"
