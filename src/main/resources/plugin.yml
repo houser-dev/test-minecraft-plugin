@@ -13,3 +13,8 @@ commands:
     aliases: [ cowcannon ]
     permission: trainingplugin.command.cow
     permission-message: "You do not have access to this command broski!"
+
+permissions:
+  trainingplugin.command.cow:
+    description: "This is a permission node"
+    default: false

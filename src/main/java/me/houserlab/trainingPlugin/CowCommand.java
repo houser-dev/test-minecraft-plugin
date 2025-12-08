@@ -2,6 +2,8 @@ package me.houserlab.trainingPlugin;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,10 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class CowCommand implements CommandExecutor, TabExecutor {
 
@@ -47,8 +46,6 @@ public class CowCommand implements CommandExecutor, TabExecutor {
             }
         }
 
-        plugin.commandCooldown.put(id, now + cooldown);
-
 
         if (args.length != 2) {
             TrainingPlugin.getInstance().getLogger().warning("Command issue :(");
@@ -56,12 +53,21 @@ public class CowCommand implements CommandExecutor, TabExecutor {
             return false;
         }
 
-        if (Integer.parseInt(args[1]) > 100) {
+        try {
+            Integer.parseInt(args[1]);
+        } catch (NumberFormatException e) {
+            sender.sendMessage(ChatColor.RED + "Invalid Number: " + args[1] + ", please enter valid number.");
+            return true;
+        }
+
+        if (Integer.parseInt(args[1]) > 500) {
             sender.sendMessage("Bro too many, no more than 100 please");
             return false;
         }
 
         int count = Integer.parseInt(args[1]);
+
+        plugin.commandCooldown.put(id, now + cooldown);
 
         new BukkitRunnable() {
 
@@ -87,7 +93,15 @@ public class CowCommand implements CommandExecutor, TabExecutor {
 
                 }
 
+                AttributeInstance attr = cow.getAttribute(Attribute.MAX_HEALTH);
+                if (attr != null) {
+                    attr.setBaseValue(40.0);
+                    cow.setHealth(40.0);
+                }
+
+
                 cow.getPersistentDataContainer().set(TrainingPlugin.COWSPLOSION_KEY, PersistentDataType.BOOLEAN, true);
+
 
                 cow.setCustomName(ChatColor.RED + "MILKY ME");
                 cow.setCustomNameVisible(true);
@@ -98,7 +112,7 @@ public class CowCommand implements CommandExecutor, TabExecutor {
             }
 
 
-        }.runTaskTimer(TrainingPlugin.getInstance(), 0L, 1L);
+        }.runTaskTimer(TrainingPlugin.getInstance(), 0L, 0L);
 
 
         return true;

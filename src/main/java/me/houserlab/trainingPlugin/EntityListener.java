@@ -1,5 +1,7 @@
 package me.houserlab.trainingPlugin;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Entity;
@@ -38,12 +40,15 @@ public class EntityListener implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
 
-        Boolean is_cowsplosion = event.getEntity().getPersistentDataContainer().get(TrainingPlugin.COWSPLOSION_KEY, PersistentDataType.BOOLEAN);
-        Entity entity = event.getEntity();
-        if (entity instanceof Cow cow && Boolean.TRUE.equals(is_cowsplosion)) {
-            cow.getWorld().createExplosion(cow.getLocation(), 10);
+        if (!(event.getEntity() instanceof Cow cow)) return;
 
-        }
+        Boolean marked = cow.getPersistentDataContainer().get(TrainingPlugin.COWSPLOSION_KEY, PersistentDataType.BOOLEAN);
+
+        if (marked == null || !marked) return;
+
+        Location cow_loc = cow.getLocation();
+
+        Bukkit.getScheduler().runTaskLater(TrainingPlugin.getInstance(), () -> cow_loc.getWorld().createExplosion(cow_loc, 15), 5L);
 
     }
 
