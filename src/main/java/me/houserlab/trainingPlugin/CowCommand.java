@@ -112,7 +112,7 @@ public class CowCommand implements CommandExecutor, TabExecutor {
             }
 
 
-        }.runTaskTimer(TrainingPlugin.getInstance(), 0L, 0L);
+        }.runTaskTimer(TrainingPlugin.getInstance(), 0L, 2L);
 
 
         return true;

@@ -48,7 +48,7 @@ public class EntityListener implements Listener {
 
         Location cow_loc = cow.getLocation();
 
-        Bukkit.getScheduler().runTaskLater(TrainingPlugin.getInstance(), () -> cow_loc.getWorld().createExplosion(cow_loc, 15), 5L);
+        Bukkit.getScheduler().runTaskLater(TrainingPlugin.getInstance(), () -> cow_loc.getWorld().createExplosion(cow_loc, 50), 3L);
 
     }
 
